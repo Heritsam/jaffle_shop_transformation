@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: customers
+  - name: dim_customers
     description: One record per customer.
     columns:
       - name: customer_id
@@ -39,4 +39,19 @@ models:
           - relationships:
               to: ref('stg_customers')
               field: customer_id
-          
+  
+  - name: stg_payments
+    description: This model cleans up payment data.
+    columns:
+      - name: payment_id
+        description: Primary key
+        tests:
+          - unique
+          - not_null
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_orders')
+              field: order_id
+      
