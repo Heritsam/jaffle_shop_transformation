@@ -1,2 +1,2 @@
 # dbt Transformation
-Learning the "transformation" from ELT process using dbt and snowflake
+Learning the "transformation" in ELT process using dbt. The data is stored in Snowflake.
