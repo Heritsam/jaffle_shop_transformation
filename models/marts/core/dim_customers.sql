@@ -1,6 +1,9 @@
 with customers as (
     select * from {{ ref('stg_customers') }}
 ),
+employees as (
+    select * from {{ ref('employees') }}
+),
 orders as (
     select * from {{ ref('fct_orders') }}
 ),
@@ -19,12 +22,14 @@ final as (
         customers.customer_id,
         customers.first_name,
         customers.last_name,
+        employees.employee_id is not null as is_employee,
         customer_orders.first_order_date,
         customer_orders.most_recent_order_date,
         coalesce(customer_orders.num_of_orders, 0) as num_of_orders,
         coalesce(customer_orders.lifetime_value, 0) as lifetime_value
     from customers
     left join customer_orders using(customer_id)
+    left join employees using(customer_id)
     group by all
 )
 
